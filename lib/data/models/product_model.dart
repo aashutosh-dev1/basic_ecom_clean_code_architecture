@@ -14,11 +14,11 @@ class ProductModel extends Equatable {
   final String brand;
   final String brandLogo;
   final String id;
-  final int? minQty;
+  int minQty;
 
   final List<ReviewModel> reviews;
 
-  const ProductModel({
+  ProductModel({
     required this.name,
     required this.image,
     required this.description,
@@ -28,7 +28,7 @@ class ProductModel extends Equatable {
     required this.brand,
     required this.brandLogo,
     required this.id,
-    this.minQty=1,
+    this.minQty = 1,
     required this.reviews,
   });
 
@@ -43,6 +43,10 @@ class ProductModel extends Equatable {
       }
       return totalReview / reviews.length;
     }
+  }
+
+  double getTotalPrice() {
+    return minQty * price;
   }
 
   @override
@@ -133,6 +137,6 @@ class ProductModel extends Equatable {
 
   @override
   String toString() {
-    return 'ProductModel(name: $name, image: $image, description: $description, price: $price, sizes: $sizes, colors: $colors, brand: $brand, brandLogo: $brandLogo, id: $id, minQty: $minQty, reviews: $reviews)';
+    return 'ProductModel(name:minQty: $minQty, )';
   }
 }

@@ -17,5 +17,5 @@ class CartState extends Equatable {
   }
 
   @override
-  String toString() => 'CartState(cartItem: $cartItem)';
+  String toString() => 'CartState(cartItem: $cartItem )';
 }

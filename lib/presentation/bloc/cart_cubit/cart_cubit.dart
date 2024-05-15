@@ -23,7 +23,25 @@ class CartCubit extends Cubit<CartState> {
     emit(state.copyWith(cartItem: cartItems));
   }
 
-  Future<void> increaseQte(ProductModel product) async {
-    print(product.minQty);
+  void increaseQuantity(String productId) {
+    final List<ProductModel> updatedCart = state.cartItem.map((product) {
+      if (product.id == productId) {
+        return product.copyWith(minQty: product.minQty++);
+      } else {
+        return product;
+      }
+    }).toList();
+    emit(state.copyWith(cartItem: updatedCart));
+  }
+
+  void decreaseQuantity(String productId) {
+    final List<ProductModel> updatedCart = state.cartItem.map((product) {
+      if (product.id == productId) {
+        return product.copyWith(minQty: product.minQty--);
+      } else {
+        return product;
+      }
+    }).toList();
+    emit(state.copyWith(cartItem: updatedCart));
   }
 }

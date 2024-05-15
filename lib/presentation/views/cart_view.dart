@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:shoesly/data/models/product_model.dart';
 import 'package:shoesly/data/network/firestore_db.dart';
 import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/widgets/cart_item_widget.dart';
@@ -19,9 +20,19 @@ class _CartViewState extends State<CartView> {
     super.initState();
   }
 
+  double calculateGrandTotal() {
+    double grandTotal = 0.0;
+
+    for (var product in context.watch<CartCubit>().state.cartItem) {
+      grandTotal += product.minQty * product.price;
+    }
+
+    return grandTotal;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final cartBloc = context.read<CartCubit>();
+    final cartBloc = context.watch<CartCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -56,7 +67,7 @@ class _CartViewState extends State<CartView> {
                   const Text("Grand Total"),
                   const Gap(5),
                   Text(
-                    "\$235.00",
+                    calculateGrandTotal().toStringAsFixed(2),
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 20,
@@ -99,6 +110,21 @@ class _CartViewState extends State<CartView> {
               child: CartItemWidget(
                 i: index,
                 productModel: cartBloc.state.cartItem[index],
+                qty: cartBloc.state.cartItem[index].minQty,
+                increaseCart: () {
+                  cartBloc.increaseQuantity(cartBloc.state.cartItem[index].id);
+                  print(cartBloc.state.cartItem[index].getTotalPrice());
+                  setState(() {});
+                },
+                decreaseCart: cartBloc.state.cartItem[index].minQty == 1
+                    ? () {}
+                    : () {
+                        cartBloc.decreaseQuantity(
+                            cartBloc.state.cartItem[index].id);
+                        print(cartBloc.state.cartItem[index].getTotalPrice());
+
+                        setState(() {});
+                      },
               ),
             ),
           )),

@@ -12,7 +12,7 @@ class FirestoreDB {
 
   Future<void> uploadData() async {
     var product = [
-      const ProductModel(
+       ProductModel(
         id: "1",
         name: 'Jordan 1 Retro High Tie Dye',
         image: [
@@ -42,7 +42,7 @@ class FirestoreDB {
               userRating: 3.5),
         ],
       ),
-      const ProductModel(
+       ProductModel(
         name: 'Jordan 1 Retro High Tie Dye',
         image: [
           "https://images.unsplash.com/photo-1620794341491-76be6eeb6946?q=80&w=3394&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -66,7 +66,7 @@ class FirestoreDB {
         ],
         id: '2',
       ),
-      const ProductModel(
+       ProductModel(
         name: 'Jordan 1 Retro High Tie Dye',
         image: [
           "https://images.unsplash.com/photo-1620794341491-76be6eeb6946?q=80&w=3394&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

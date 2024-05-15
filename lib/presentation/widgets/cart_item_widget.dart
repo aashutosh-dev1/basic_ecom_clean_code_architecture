@@ -8,10 +8,16 @@ import 'package:shoesly/utils/colors.dart';
 class CartItemWidget extends StatefulWidget {
   final ProductModel productModel;
   final int i;
+  final void Function()? increaseCart;
+  final void Function()? decreaseCart;
+  final int? qty;
   const CartItemWidget({
     Key? key,
     required this.productModel,
     required this.i,
+    this.qty,
+    this.increaseCart,
+    this.decreaseCart,
   }) : super(key: key);
 
   @override
@@ -22,11 +28,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
   int minQty = 1;
 
   String calculatePrice() {
-    if (minQty == 1) {
-      return widget.productModel.price.toStringAsFixed(2);
-    } else {
-      return (minQty * widget.productModel.price).toStringAsFixed(2);
-    }
+    return (widget.qty! * widget.productModel.price).toStringAsFixed(2);
   }
 
   @override
@@ -79,26 +81,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
-                              onPressed: (minQty <= 1)
-                                  ? () {}
-                                  : () {
-                                      minQty--;
-                                      setState(() {});
-                                    },
+                              onPressed: widget.decreaseCart,
                               icon: Icon(
                                 Icons.remove_circle_outline,
-                                color: (minQty <= 1)
+                                color: (widget.qty! <= 1)
                                     ? AppColors.neturalColor200
                                     : AppColors.primaryColor,
                               ),
                             ),
-                            Text("${widget.productModel.minQty}"),
+                            Text("${widget.qty}"),
                             IconButton(
-                              onPressed: () {
-                                context.read<CartCubit>().increaseQte(widget
-                                    .productModel
-                                    .copyWith(minQty: minQty++));
-                              },
+                              onPressed: widget.increaseCart,
                               icon: const Icon(Icons.add_circle_outline_sharp),
                             ),
                           ],
