@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:shoesly/core/constants/enums.dart';
 import 'package:shoesly/core/routes/routes.dart';
 import 'package:shoesly/data/network/firestore_db.dart';
+import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/views/product_detail_view.dart';
 import 'package:shoesly/presentation/widgets/category_widget.dart';
 import 'package:shoesly/presentation/widgets/persistant_category.dart';
@@ -37,7 +38,10 @@ class _DiscoverViewState extends State<DiscoverView> {
           AppState.success => Scaffold(
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: const FilterWidget(),
+              floatingActionButton: Padding(
+                padding: EdgeInsets.only(bottom: 8.0),
+                child: const FilterWidget(),
+              ),
               appBar: AppBar(
                 title: InkWell(
                   onTap: () async {},
@@ -57,7 +61,9 @@ class _DiscoverViewState extends State<DiscoverView> {
                         Navigator.pushNamed(context, Routes.cartRoute);
                       },
                       child: SvgPicture.asset(
-                          CustomAssetsManager().cartEmptyIcon)),
+                          context.watch<CartCubit>().state.cartItem.isNotEmpty
+                              ? CustomAssetsManager().cartFilledIcon
+                              : CustomAssetsManager().cartEmptyIcon)),
                   const Gap(30),
                 ],
               ),
@@ -86,8 +92,9 @@ class _DiscoverViewState extends State<DiscoverView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>  ProductDetailView(
-                                productModel: state.productsByCategories![index],
+                              builder: (context) => ProductDetailView(
+                                productModel:
+                                    state.productsByCategories![index],
                               ),
                             ),
                           );

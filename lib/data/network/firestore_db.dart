@@ -13,6 +13,7 @@ class FirestoreDB {
   Future<void> uploadData() async {
     var product = [
       const ProductModel(
+        id: "1",
         name: 'Jordan 1 Retro High Tie Dye',
         image: [
           "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -25,6 +26,7 @@ class FirestoreDB {
         sizes: ['39', '40', '41', '42', '43'],
         colors: ['Red', 'Blue', 'Green'],
         brand: 'Nike',
+        minQty: 1,
         reviews: [
           ReviewModel(
               userImage:
@@ -50,6 +52,7 @@ class FirestoreDB {
             """Engineered to crush any movement-based workout, these On sneakers enhance the label's original Cloud sneaker with cutting edge technologies for a pair. """,
         price: 230.00,
         brandLogo: "ADIDAS",
+        minQty: 1,
         sizes: ['39', '40', '41'],
         colors: ['Red', 'Blue', 'Green'],
         brand: 'ADIDAS',
@@ -61,6 +64,7 @@ class FirestoreDB {
               userReview: "This is not as good as I thought",
               userRating: 1.5),
         ],
+        id: '2',
       ),
       const ProductModel(
         name: 'Jordan 1 Retro High Tie Dye',
@@ -68,6 +72,7 @@ class FirestoreDB {
           "https://images.unsplash.com/photo-1620794341491-76be6eeb6946?q=80&w=3394&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=2898&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         ],
+        minQty: 1,
         description:
             """Engineered to crush any movement-based workout, these On sneakers enhance the label's original Cloud sneaker with cutting edge technologies for a pair. """,
         price: 30.00,
@@ -95,6 +100,7 @@ class FirestoreDB {
               userReview: "This is very good, I love it",
               userRating: 4),
         ],
+        id: '3',
       ),
     ];
     for (var i in product) {
@@ -112,11 +118,13 @@ class FirestoreDB {
 
       Map<String, dynamic> productData = {
         'name': product.name,
+        'id': product.id,
         'image': product.image,
         'description': product.description,
         'price': product.price,
         'sizes': product.sizes,
         'colors': product.colors,
+        'minQty': product.minQty,
         'brand': product.brand,
         'reviews': product.reviews.map((review) => review.toMap()).toList(),
         'averageReview': averageReview,
@@ -156,6 +164,7 @@ class FirestoreDB {
               userRating: reviewData['userRating'].toDouble(),
             );
           }).toList(),
+          id: data['id'],
         );
       }).toList();
 

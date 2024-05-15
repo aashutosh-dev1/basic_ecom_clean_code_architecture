@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:shoesly/data/network/firestore_db.dart';
+import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/widgets/cart_item_widget.dart';
 import 'package:shoesly/utils/colors.dart';
 
@@ -13,7 +15,13 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final cartBloc = context.read<CartCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cart"),
@@ -85,10 +93,13 @@ class _CartViewState extends State<CartView> {
       body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 15.0),
           child: ListView.builder(
-            itemCount: 4,
-            itemBuilder: (context, index) => const Padding(
+            itemCount: context.watch<CartCubit>().state.cartItem.length,
+            itemBuilder: (context, index) => Padding(
               padding: EdgeInsets.only(bottom: 30.0),
-              child: CartItemWidget(),
+              child: CartItemWidget(
+                i: index,
+                productModel: cartBloc.state.cartItem[index],
+              ),
             ),
           )),
     );

@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'shoesly-7f81b.appspot.com',
     iosBundleId: 'com.example.shoesly',
   );
+
 }

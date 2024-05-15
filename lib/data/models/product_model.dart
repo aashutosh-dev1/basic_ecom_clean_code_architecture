@@ -13,6 +13,8 @@ class ProductModel extends Equatable {
   final List<String> colors;
   final String brand;
   final String brandLogo;
+  final String id;
+  final int? minQty;
 
   final List<ReviewModel> reviews;
 
@@ -25,6 +27,8 @@ class ProductModel extends Equatable {
     required this.colors,
     required this.brand,
     required this.brandLogo,
+    required this.id,
+    this.minQty=1,
     required this.reviews,
   });
 
@@ -52,6 +56,7 @@ class ProductModel extends Equatable {
       colors,
       brand,
       brandLogo,
+      id,
       reviews,
     ];
   }
@@ -65,6 +70,8 @@ class ProductModel extends Equatable {
     List<String>? colors,
     String? brand,
     String? brandLogo,
+    String? id,
+    int? minQty,
     List<ReviewModel>? reviews,
   }) {
     return ProductModel(
@@ -76,13 +83,15 @@ class ProductModel extends Equatable {
       colors: colors ?? this.colors,
       brand: brand ?? this.brand,
       brandLogo: brandLogo ?? this.brandLogo,
+      id: id ?? this.id,
+      minQty: minQty ?? this.minQty,
       reviews: reviews ?? this.reviews,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
+
     result.addAll({'name': name});
     result.addAll({'image': image});
     result.addAll({'description': description});
@@ -91,8 +100,12 @@ class ProductModel extends Equatable {
     result.addAll({'colors': colors});
     result.addAll({'brand': brand});
     result.addAll({'brandLogo': brandLogo});
+    result.addAll({'id': id});
+    if (minQty != null) {
+      result.addAll({'minQty': minQty});
+    }
     result.addAll({'reviews': reviews.map((x) => x.toMap()).toList()});
-  
+
     return result;
   }
 
@@ -106,7 +119,10 @@ class ProductModel extends Equatable {
       colors: List<String>.from(map['colors']),
       brand: map['brand'] ?? '',
       brandLogo: map['brandLogo'] ?? '',
-      reviews: List<ReviewModel>.from(map['reviews']?.map((x) => ReviewModel.fromMap(x))),
+      id: map['id'] ?? '',
+      minQty: map['minQty']?.toInt(),
+      reviews: List<ReviewModel>.from(
+          map['reviews']?.map((x) => ReviewModel.fromMap(x))),
     );
   }
 
@@ -117,6 +133,6 @@ class ProductModel extends Equatable {
 
   @override
   String toString() {
-    return 'ProductModel(name: $name, image: $image, description: $description, price: $price, sizes: $sizes, colors: $colors, brand: $brand, brandLogo: $brandLogo, reviews: $reviews)';
+    return 'ProductModel(name: $name, image: $image, description: $description, price: $price, sizes: $sizes, colors: $colors, brand: $brand, brandLogo: $brandLogo, id: $id, minQty: $minQty, reviews: $reviews)';
   }
 }

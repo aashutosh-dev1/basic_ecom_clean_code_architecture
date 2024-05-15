@@ -2,11 +2,14 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
+import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/utils/assets_manager.dart';
 import 'package:shoesly/utils/colors.dart';
 
+import '../../core/routes/routes.dart';
 import '../../data/models/product_model.dart';
 
 class ProductDetailView extends StatefulWidget {
@@ -91,7 +94,14 @@ class _ProductDetailViewState extends State<ProductDetailView> {
       ),
       appBar: AppBar(
         actions: [
-          SvgPicture.asset(CustomAssetsManager().cartEmptyIcon),
+          InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, Routes.cartRoute);
+              },
+              child: SvgPicture.asset(
+                  context.watch<CartCubit>().state.cartItem.isNotEmpty
+                      ? CustomAssetsManager().cartFilledIcon
+                      : CustomAssetsManager().cartEmptyIcon)),
           const Gap(30),
         ],
         leading: GestureDetector(
@@ -334,8 +344,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       ),
                     );
                   },
-                  itemCount:
-                      product.reviews.length <= 3 ? 3 : product.reviews.length,
+                  itemCount: product.reviews.length,
                 ),
 
                 Container(
@@ -389,7 +398,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                 child: Column(
                   children: <Widget>[
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
@@ -399,11 +408,19 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Text(
-                          "X",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.grey,
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "X",
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.grey,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -463,7 +480,12 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       children: <Widget>[
                         Expanded(
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context
+                                  .read<CartCubit>()
+                                  .addProductToCart(product);
+                              Navigator.pop(context);
+                            },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
