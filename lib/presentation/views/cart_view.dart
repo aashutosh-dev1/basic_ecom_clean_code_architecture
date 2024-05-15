@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:shoesly/data/models/product_model.dart';
 import 'package:shoesly/data/network/firestore_db.dart';
 import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/widgets/cart_item_widget.dart';
@@ -106,7 +105,7 @@ class _CartViewState extends State<CartView> {
           child: ListView.builder(
             itemCount: context.watch<CartCubit>().state.cartItem.length,
             itemBuilder: (context, index) => Padding(
-              padding: EdgeInsets.only(bottom: 30.0),
+              padding: const EdgeInsets.only(bottom: 30.0),
               child: CartItemWidget(
                 i: index,
                 productModel: cartBloc.state.cartItem[index],

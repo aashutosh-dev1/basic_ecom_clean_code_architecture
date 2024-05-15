@@ -105,10 +105,8 @@ class ProductModel extends Equatable {
     result.addAll({'brand': brand});
     result.addAll({'brandLogo': brandLogo});
     result.addAll({'id': id});
-    if (minQty != null) {
-      result.addAll({'minQty': minQty});
-    }
-    result.addAll({'reviews': reviews.map((x) => x.toMap()).toList()});
+    result.addAll({'minQty': minQty});
+      result.addAll({'reviews': reviews.map((x) => x.toMap()).toList()});
 
     return result;
   }

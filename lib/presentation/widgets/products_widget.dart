@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 import 'package:shoesly/data/models/product_model.dart';
-import 'package:shoesly/utils/assets_manager.dart';
 import 'package:shoesly/utils/colors.dart';
 
 class ProductsWidget extends StatefulWidget {

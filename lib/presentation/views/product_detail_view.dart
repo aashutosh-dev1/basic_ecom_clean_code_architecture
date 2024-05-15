@@ -1,7 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
@@ -24,6 +22,7 @@ class ProductDetailView extends StatefulWidget {
 class _ProductDetailViewState extends State<ProductDetailView> {
   ProductModel get product => widget.productModel;
   int _currentIndex = 0;
+
   Widget buildIndicator(int length) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -70,7 +69,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => openAddCartBottomSheet(context),
+              onTap: () => openAddCartBottomSheet(context,product),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(13.0, 18.0, 24.0, 20.0),
 
@@ -376,15 +375,20 @@ class _ProductDetailViewState extends State<ProductDetailView> {
     );
   }
 
-  openAddCartBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (BuildContext bc) {
+void openAddCartBottomSheet(BuildContext context, ProductModel product) {
+  TextEditingController qtyController = TextEditingController();
+  double totalPrice = product.price; // Initialize totalPrice with the product price
+
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext bc) {
+      return StatefulBuilder(builder: (context, setState) {
         return SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom / 2),
+              bottom: MediaQuery.of(context).viewInsets.bottom / 2,
+            ),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.5,
               decoration: const BoxDecoration(
@@ -397,11 +401,12 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Add to cart",
                           style: TextStyle(
                             fontSize: 18.0,
@@ -412,8 +417,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           onTap: () {
                             Navigator.pop(context);
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                          child: const Padding(
+                            padding: EdgeInsets.all(8.0),
                             child: Text(
                               "X",
                               style: TextStyle(
@@ -426,40 +431,38 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Quantity",
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Colors.grey,
                           ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(
-                              width: 200,
-                              child: TextField(),
-                            )
-                            // IconButton(
-                            //   icon: const Icon(Icons.remove),
-                            //   onPressed: () {},
-                            // ),
-                            // const Text("1"),
-                            // IconButton(
-                            //   icon: const Icon(Icons.add),
-                            //   onPressed: () {},
-                            // ),
-                          ],
+                        SizedBox(
+                          width: 150,
+                          child: TextField(
+                            controller: qtyController,
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              // Parse the input value as an integer
+                              int quantity = int.tryParse(value) ?? 0;
+                              // Update totalPrice based on the quantity
+                              totalPrice = product.price * quantity;
+                              // Update the state to reflect the changes
+                              setState(() {});
+                            },
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 10.0),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           "Total Price",
                           style: TextStyle(
                             fontSize: 16.0,
@@ -467,8 +470,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           ),
                         ),
                         Text(
-                          "\$235.00",
-                          style: TextStyle(
+                          "\$${totalPrice.toStringAsFixed(2)}",
+                          style: const TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -481,9 +484,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
-                              context
-                                  .read<CartCubit>()
-                                  .addProductToCart(product);
+                              // Add the product to the cart with the specified quantity
+                              int quantity = int.tryParse(qtyController.text) ?? 0;
+                              context.read<CartCubit>().addProductToCart(product, quantity);
                               Navigator.pop(context);
                             },
                             style: ElevatedButton.styleFrom(
@@ -502,7 +505,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
             ),
           ),
         );
-      },
-    );
-  }
+      });
+    },
+  );
+}
+
 }

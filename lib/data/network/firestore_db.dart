@@ -15,7 +15,7 @@ class FirestoreDB {
        ProductModel(
         id: "1",
         name: 'Jordan 1 Retro High Tie Dye',
-        image: [
+        image: const [
           "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=1920&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         ],
@@ -23,11 +23,11 @@ class FirestoreDB {
             """Engineered to crush any movement-based workout, these On sneakers enhance the label's original Cloud sneaker with cutting edge technologies for a pair. """,
         price: 99.99,
         brandLogo: "NIKE",
-        sizes: ['39', '40', '41', '42', '43'],
-        colors: ['Red', 'Blue', 'Green'],
+        sizes: const ['39', '40', '41', '42', '43'],
+        colors: const ['Red', 'Blue', 'Green'],
         brand: 'Nike',
         minQty: 1,
-        reviews: [
+        reviews: const [
           ReviewModel(
               userImage:
                   "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -44,7 +44,7 @@ class FirestoreDB {
       ),
        ProductModel(
         name: 'Jordan 1 Retro High Tie Dye',
-        image: [
+        image: const [
           "https://images.unsplash.com/photo-1620794341491-76be6eeb6946?q=80&w=3394&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=2898&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         ],
@@ -53,10 +53,10 @@ class FirestoreDB {
         price: 230.00,
         brandLogo: "ADIDAS",
         minQty: 1,
-        sizes: ['39', '40', '41'],
-        colors: ['Red', 'Blue', 'Green'],
+        sizes: const ['39', '40', '41'],
+        colors: const ['Red', 'Blue', 'Green'],
         brand: 'ADIDAS',
-        reviews: [
+        reviews: const [
           ReviewModel(
               userImage:
                   "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -68,7 +68,7 @@ class FirestoreDB {
       ),
        ProductModel(
         name: 'Jordan 1 Retro High Tie Dye',
-        image: [
+        image: const [
           "https://images.unsplash.com/photo-1620794341491-76be6eeb6946?q=80&w=3394&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
           "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=2898&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         ],
@@ -77,10 +77,10 @@ class FirestoreDB {
             """Engineered to crush any movement-based workout, these On sneakers enhance the label's original Cloud sneaker with cutting edge technologies for a pair. """,
         price: 30.00,
         brandLogo: "ADIDAS",
-        sizes: ['39', '40', '41'],
-        colors: ['Red', 'Blue', 'Green'],
+        sizes: const ['39', '40', '41'],
+        colors: const ['Red', 'Blue', 'Green'],
         brand: 'ADIDAS',
-        reviews: [
+        reviews: const [
           ReviewModel(
               userImage:
                   "https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=2334&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",

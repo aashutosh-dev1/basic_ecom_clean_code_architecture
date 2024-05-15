@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoesly/data/network/firestore_db.dart';
 import 'package:shoesly/presentation/views/discover_view.dart';
 
 import '../bloc/discover_cubit/discover_cubit.dart';

@@ -2,17 +2,28 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../data/models/product_model.dart';
 
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  CartCubit() : super(CartState(cartItem: []));
+  CartCubit() : super(const CartState(cartItem: []));
 
-  FutureOr<void> addProductToCart(ProductModel product) {
-    emit(state.copyWith(cartItem: List.of(state.cartItem)..add(product)));
+ void addProductToCart(ProductModel product, int newQty) {
+    List<ProductModel> updatedCart = List.of(state.cartItem);
+
+    int existingIndex = updatedCart.indexWhere((item) => item.id == product.id);
+
+    if (existingIndex != -1) {
+      updatedCart[existingIndex] = updatedCart[existingIndex].copyWith(
+        minQty: updatedCart[existingIndex].minQty + newQty,
+      );
+    } else {
+      updatedCart.add(product.copyWith(minQty: newQty));
+    }
+
+    emit(state.copyWith(cartItem: updatedCart));
   }
 
   FutureOr<void> deleteCartItem(String productID) {

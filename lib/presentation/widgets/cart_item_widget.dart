@@ -12,13 +12,13 @@ class CartItemWidget extends StatefulWidget {
   final void Function()? decreaseCart;
   final int? qty;
   const CartItemWidget({
-    Key? key,
+    super.key,
     required this.productModel,
     required this.i,
     this.qty,
     this.increaseCart,
     this.decreaseCart,
-  }) : super(key: key);
+  });
 
   @override
   State<CartItemWidget> createState() => _CartItemWidgetState();
@@ -65,17 +65,17 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   children: [
                     Text(
                       widget.productModel.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w600, fontSize: 16.0),
                     ),
                     Text(' ${widget.productModel.brand}. Red Grey . 40',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.w400, fontSize: 12.0)),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("${calculatePrice()}",
-                            style: TextStyle(
+                        Text(calculatePrice(),
+                            style: const TextStyle(
                                 fontWeight: FontWeight.w700, fontSize: 14.0)),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,

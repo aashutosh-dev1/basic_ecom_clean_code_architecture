@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:shoesly/core/constants/enums.dart';
 import 'package:shoesly/core/routes/routes.dart';
-import 'package:shoesly/data/network/firestore_db.dart';
 import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/views/product_detail_view.dart';
 import 'package:shoesly/presentation/widgets/category_widget.dart';
 import 'package:shoesly/presentation/widgets/persistant_category.dart';
 import 'package:shoesly/presentation/widgets/products_widget.dart';
 
-import '../../data/models/product_model.dart';
 import '../../utils/assets_manager.dart';
 import '../bloc/discover_cubit/discover_cubit.dart';
 import '../widgets/filter_widget.dart';
@@ -38,9 +35,9 @@ class _DiscoverViewState extends State<DiscoverView> {
           AppState.success => Scaffold(
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              floatingActionButton: Padding(
+              floatingActionButton: const Padding(
                 padding: EdgeInsets.only(bottom: 8.0),
-                child: const FilterWidget(),
+                child: FilterWidget(),
               ),
               appBar: AppBar(
                 title: InkWell(
