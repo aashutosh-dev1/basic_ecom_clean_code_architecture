@@ -1,4 +1,3 @@
-
 import 'package:flutter/widgets.dart';
 
 class PersistentHeader extends SliverPersistentHeaderDelegate {
@@ -19,7 +18,7 @@ class PersistentHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent => 50.0;
 
   @override
-  double get minExtent => 50.0;
+  double get minExtent => 0.0;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {

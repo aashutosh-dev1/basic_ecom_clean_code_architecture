@@ -53,7 +53,11 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                   width: 88,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20.0),
-                    color: Colors.amberAccent,
+                    image: DecorationImage(
+                        image: NetworkImage(
+                          widget.productModel.image[0],
+                        ),
+                        fit: BoxFit.cover),
                   ),
                 ),
               ),

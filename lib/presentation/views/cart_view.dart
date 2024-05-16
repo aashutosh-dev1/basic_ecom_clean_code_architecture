@@ -78,14 +78,17 @@ class _CartViewState extends State<CartView> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => FirestoreDB().uploadData(),
+              onTap: () {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Successfully purchased, Thank you"),
+                ));
+                context.read<CartCubit>().resetCartItems();
+              },
               child: Container(
                 padding: const EdgeInsets.fromLTRB(20.0, 18.0, 24.0, 20.0),
-
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(100),
                     color: AppColors.primaryColor),
-                //  13px, 24px, 13px, 24px
                 child: const Text(
                   "CHECKOUT",
                   textAlign: TextAlign.center,
@@ -112,7 +115,6 @@ class _CartViewState extends State<CartView> {
                 qty: cartBloc.state.cartItem[index].minQty,
                 increaseCart: () {
                   cartBloc.increaseQuantity(cartBloc.state.cartItem[index].id);
-                  print(cartBloc.state.cartItem[index].getTotalPrice());
                   setState(() {});
                 },
                 decreaseCart: cartBloc.state.cartItem[index].minQty == 1
@@ -120,7 +122,6 @@ class _CartViewState extends State<CartView> {
                     : () {
                         cartBloc.decreaseQuantity(
                             cartBloc.state.cartItem[index].id);
-                        print(cartBloc.state.cartItem[index].getTotalPrice());
 
                         setState(() {});
                       },

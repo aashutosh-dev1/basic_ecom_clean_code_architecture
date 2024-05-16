@@ -56,16 +56,12 @@ class DiscoverCubit extends Cubit<DiscoverState> {
 
   FutureOr<void> fetchItemsByCategories(String brand) async {
     final products = state.products;
-    print(brand);
     if (brand == "All") {
-      print(products!.length);
-
       emit(state.copyWith(productsByCategories: products));
     } else {
       if (products != null) {
         final items =
             products.where((element) => element.brand == brand).toList();
-        print(items.length);
         emit(state.copyWith(productsByCategories: items));
       }
     }

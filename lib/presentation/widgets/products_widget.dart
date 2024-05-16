@@ -77,7 +77,7 @@ class _ProductsWidgetState extends State<ProductsWidget> {
                   ),
                   const Gap(2.0),
                   Text(
-                    product.averageReview.ceil().toDouble().toString(),
+                    product.averageReview.toStringAsFixed(1),
                     style: const TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.w700,

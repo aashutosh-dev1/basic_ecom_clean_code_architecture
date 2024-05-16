@@ -69,7 +69,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => openAddCartBottomSheet(context,product),
+              onTap: () => openAddCartBottomSheet(context, product),
               child: Container(
                 padding: const EdgeInsets.fromLTRB(13.0, 18.0, 24.0, 20.0),
 
@@ -91,6 +91,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
           ],
         ),
       ),
+   
+   
       appBar: AppBar(
         actions: [
           InkWell(
@@ -169,10 +171,31 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             const Spacer(),
                             Container(
                               height: 40,
-                              color: Colors.red,
-                              child: const Icon(Icons.favorite),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                children: List.generate(
+                                  4,
+                                  (index) => Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8.0,
+                                    ),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: _currentIndex == index
+                                              ? AppColors.primaryColor
+                                              : Colors.grey,
+                                        )),
+                                  ),
+                                ),
+                              ),
                             ),
-                            const Gap(20),
+                            const Gap(10),
                           ],
                         )
                       ],
@@ -342,26 +365,36 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         ],
                       ),
                     );
+                
                   },
                   itemCount: product.reviews.length,
                 ),
 
-                Container(
-                  height: 50,
-                  width: sizeHW.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    border: Border.all(
-                      color: AppColors.neturalColor200,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      Routes.productReviewRoute,
+                      arguments: product.reviews,
+                    );
+                  },
+                  child: Container(
+                    height: 50,
+                    width: sizeHW.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      border: Border.all(
+                        color: AppColors.neturalColor200,
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "SEE ALL REVIEW",
-                      style: TextStyle(
-                        color: AppColors.primaryColor,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 14.0,
+                    child: Center(
+                      child: Text(
+                        "SEE ALL REVIEW",
+                        style: TextStyle(
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14.0,
+                        ),
                       ),
                     ),
                   ),
@@ -375,139 +408,137 @@ class _ProductDetailViewState extends State<ProductDetailView> {
     );
   }
 
-void openAddCartBottomSheet(BuildContext context, ProductModel product) {
-  TextEditingController qtyController = TextEditingController();
-  double totalPrice = product.price; // Initialize totalPrice with the product price
+  void openAddCartBottomSheet(BuildContext context, ProductModel product) {
+    TextEditingController qtyController = TextEditingController(text: "1");
+    double totalPrice = product.price;
 
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext bc) {
-      return StatefulBuilder(builder: (context, setState) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom / 2,
-            ),
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (BuildContext bc) {
+        return StatefulBuilder(builder: (context, setState) {
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom / 2,
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text(
-                          "Add to cart",
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text(
-                              "X",
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                color: Colors.grey,
-                              ),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          const Text(
+                            "Add to cart",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text(
-                          "Quantity",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 150,
-                          child: TextField(
-                            controller: qtyController,
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) {
-                              // Parse the input value as an integer
-                              int quantity = int.tryParse(value) ?? 0;
-                              // Update totalPrice based on the quantity
-                              totalPrice = product.price * quantity;
-                              // Update the state to reflect the changes
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        const Text(
-                          "Total Price",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        Text(
-                          "\$${totalPrice.toStringAsFixed(2)}",
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20.0),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              // Add the product to the cart with the specified quantity
-                              int quantity = int.tryParse(qtyController.text) ?? 0;
-                              context.read<CartCubit>().addProductToCart(product, quantity);
+                          InkWell(
+                            onTap: () {
                               Navigator.pop(context);
                             },
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text(
+                                "X",
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  color: Colors.grey,
+                                ),
                               ),
                             ),
-                            child: const Text("ADD TO CART"),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          const Text(
+                            "Quantity",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 150,
+                            child: TextField(
+                              controller: qtyController,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                int quantity = int.tryParse(value) ?? 0;
+                                totalPrice = product.price * quantity;
+                                setState(() {});
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          const Text(
+                            "Total Price",
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            "\$${totalPrice.toStringAsFixed(2)}",
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20.0),
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                int quantity =
+                                    int.tryParse(qtyController.text) ?? 0;
+                                context
+                                    .read<CartCubit>()
+                                    .addProductToCart(product, quantity);
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                              child: const Text("ADD TO CART"),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-        );
-      });
-    },
-  );
-}
-
+          );
+        });
+      },
+    );
+  }
 }

@@ -10,6 +10,10 @@ part 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   CartCubit() : super(const CartState(cartItem: []));
 
+  resetCartItems(){
+    emit(state.copyWith(cartItem: [],));
+  }
+
  void addProductToCart(ProductModel product, int newQty) {
     List<ProductModel> updatedCart = List.of(state.cartItem);
 
@@ -21,7 +25,7 @@ class CartCubit extends Cubit<CartState> {
       );
     } else {
       updatedCart.add(product.copyWith(minQty: newQty));
-    }
+  }
 
     emit(state.copyWith(cartItem: updatedCart));
   }

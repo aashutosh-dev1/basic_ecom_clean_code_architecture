@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoesly/data/models/product_model.dart';
+import 'package:shoesly/data/models/review_model.dart';
 import 'package:shoesly/presentation/views/cart_view.dart';
 import 'package:shoesly/presentation/views/discover_view.dart';
 import 'package:shoesly/presentation/views/order_summary_view.dart';
@@ -33,7 +34,9 @@ class RouteGenerator {
           builder: (_) => const ProductFilterView(),
         ),
       Routes.productReviewRoute => MaterialPageRoute(
-          builder: (_) => const ProductReviewView(),
+          builder: (_) => ProductReviewView(
+            reviews: settings.arguments as List<ReviewModel>,
+          ),
         ),
       Routes.cartRoute => MaterialPageRoute(
           builder: (_) => const CartView(),

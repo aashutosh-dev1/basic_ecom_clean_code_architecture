@@ -6,6 +6,7 @@ import 'package:shoesly/domain/repository/fetch_data_repository.dart';
 import 'package:shoesly/firebase_options.dart';
 import 'package:shoesly/presentation/bloc/cart_cubit/cart_cubit.dart';
 import 'package:shoesly/presentation/bloc/discover_cubit/discover_cubit.dart';
+import 'package:shoesly/presentation/bloc/review_cubit/review_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => CartCubit(),
+          ),
+          BlocProvider(
+            create: (context) => ReviewCubit(),
           ),
         ],
         child: MaterialApp(

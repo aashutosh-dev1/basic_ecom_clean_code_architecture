@@ -49,5 +49,7 @@ class _CategoryWidgetState extends State<CategoryWidget>
         itemCount: discoverCubit.state.categories?.length ?? 0,
       ),
     );
+  
+  
   }
 }
